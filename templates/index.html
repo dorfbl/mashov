@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎒 המשוב שלי</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { direction: rtl; font-family: 'Segoe UI', Arial, sans-serif; background: #f7f3ff; min-height: 100vh; padding: 1rem; }
+.wrap { max-width: 920px; margin: 0 auto; }
+
+/* ── hero ── */
+.hero { text-align: center; padding: 1.25rem 1rem 1rem; background: #EEEDFE; border-radius: 24px; margin-bottom: 1.5rem; border: 2px solid #AFA9EC; }
+.hero-title { font-size: 22px; font-weight: 700; color: #26215C; }
+.hero-sub { font-size: 13px; color: #534AB7; margin-top: 3px; }
+.stars { font-size: 22px; margin-bottom: 5px; }
+.refresh-btn { display: inline-block; margin-top: 10px; background: #534AB7; color: #fff; border: none; border-radius: 20px; padding: 6px 18px; font-size: 13px; cursor: pointer; text-decoration: none; font-family: inherit; }
+.refresh-btn:hover { background: #3C3489; }
+
+/* ── section title ── */
+.sec-title { font-size: 17px; font-weight: 700; color: #26215C; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+.sec-sub { font-size: 13px; font-weight: 400; color: #888; }
+.divider { border: none; border-top: 2px dashed #c8c0f0; margin: 1.25rem 0; }
+
+/* ── smart notifications ── */
+.smart-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 1.5rem; }
+@media (max-width: 600px) { .smart-grid { grid-template-columns: 1fr; } }
+
+.smart-panel { border-radius: 20px; overflow: hidden; }
+.smart-panel-header { padding: 10px 16px; font-size: 15px; font-weight: 700; color: #fff; display: flex; align-items: center; gap: 8px; }
+.smart-panel-body { background: #fff; border: 2px solid; border-top: none; border-radius: 0 0 20px 20px; }
+
+.event-card { padding: 12px 16px; border-bottom: 1px solid #f0eaff; display: flex; gap: 10px; align-items: flex-start; }
+.event-card:last-child { border-bottom: none; }
+.event-emoji { font-size: 24px; flex-shrink: 0; }
+.event-body { flex: 1; }
+.event-title { font-size: 14px; font-weight: 700; color: #1a1a2e; }
+.event-date { font-size: 12px; margin-top: 2px; font-weight: 600; }
+.urgency-badge { display: inline-block; font-size: 11px; font-weight: 700; border-radius: 10px; padding: 1px 8px; margin-bottom: 5px; color: #fff; }
+.bring-list { margin-top: 6px; }
+.bring-item { display: inline-flex; align-items: center; gap: 4px; background: #f3f0ff; color: #534AB7; font-size: 12px; font-weight: 600; border-radius: 8px; padding: 2px 8px; margin: 2px 2px 2px 0; }
+.bring-item::before { content: "🎒"; font-size: 11px; }
+.event-note { font-size: 12px; color: #555; margin-top: 5px; font-style: italic; line-height: 1.5; }
+
+.hw-card { padding: 12px 16px; border-bottom: 1px solid #f0eaff; display: flex; gap: 10px; align-items: flex-start; }
+.hw-card:last-child { border-bottom: none; }
+.hw-emoji { font-size: 22px; flex-shrink: 0; }
+.hw-body { flex: 1; }
+.hw-subject { font-size: 12px; font-weight: 700; color: #fff; display: inline-block; border-radius: 8px; padding: 1px 8px; margin-bottom: 4px; }
+.hw-task { font-size: 13px; color: #1a1a2e; line-height: 1.6; font-weight: 500; }
+.hw-due { font-size: 11px; font-weight: 700; margin-top: 4px; }
+
+.empty-smart { padding: 18px 16px; text-align: center; color: #aaa; font-size: 13px; }
+
+/* ── timetable ── */
+.day-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; margin-bottom: 1.5rem; }
+@media (max-width: 700px) { .day-grid { grid-template-columns: repeat(3, 1fr); } }
+.day-card { border-radius: 16px; padding: 10px 8px; text-align: center; }
+.day-card.d1{background:#EEEDFE;border:2px solid #AFA9EC;} .day-card.d2{background:#E1F5EE;border:2px solid #5DCAA5;}
+.day-card.d3{background:#FAEEDA;border:2px solid #FAC775;} .day-card.d4{background:#FAECE7;border:2px solid #F0997B;}
+.day-card.d5{background:#FBEAF0;border:2px solid #ED93B1;} .day-card.d6{background:#EAF3DE;border:2px solid #97C459;}
+.day-name{font-size:13px;font-weight:700;margin-bottom:8px;}
+.d1 .day-name{color:#26215C;} .d2 .day-name{color:#04342C;} .d3 .day-name{color:#412402;}
+.d4 .day-name{color:#4A1B0C;} .d5 .day-name{color:#4B1528;} .d6 .day-name{color:#173404;}
+.lesson-pill{border-radius:10px;padding:4px 6px;margin-bottom:4px;font-size:11px;font-weight:600;display:flex;align-items:center;gap:4px;}
+.lesson-num{width:17px;height:17px;border-radius:50%;background:rgba(255,255,255,0.5);font-size:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:700;}
+.pill-heb{background:#378ADD;color:#E6F1FB;} .pill-math{background:#639922;color:#EAF3DE;}
+.pill-pe{background:#D85A30;color:#FAECE7;} .pill-art{background:#D4537E;color:#FBEAF0;}
+.pill-sci{background:#1D9E75;color:#E1F5EE;} .pill-enr{background:#7F77DD;color:#EEEDFE;}
+.pill-life{background:#BA7517;color:#FAEEDA;} .pill-hrt{background:#D4537E;color:#FBEAF0;}
+.pill-road{background:#5F5E5A;color:#F1EFE8;}
+
+/* ── expandable cards ── */
+.expand-card{border-radius:14px;margin-bottom:8px;overflow:hidden;}
+.expand-header{display:flex;align-items:center;gap:10px;padding:11px 16px;cursor:pointer;user-select:none;transition:filter 0.15s;}
+.expand-header:hover{filter:brightness(1.1);}
+.msg-bubble{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.22);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:20px;}
+.msg-header-text{flex:1;}
+.msg-subject{font-size:13px;font-weight:600;color:#fff;}
+.msg-meta{font-size:11px;color:rgba(255,255,255,0.78);margin-top:2px;}
+.new-badge{background:#FAC775;color:#412402;font-size:10px;font-weight:700;border-radius:10px;padding:1px 7px;margin-left:6px;}
+.chevron{font-size:14px;color:rgba(255,255,255,0.7);transition:transform 0.25s;flex-shrink:0;}
+.expand-card.open .chevron{transform:rotate(180deg);}
+.expand-body{display:none;padding:0 16px 14px 16px;}
+.expand-card.open .expand-body{display:block;}
+.expand-body-inner{background:#fff;border-radius:10px;padding:14px 18px;font-size:13px;color:#222;line-height:1.8;direction:rtl;}
+.expand-body-inner p{margin-bottom:8px;} .expand-body-inner a{color:#534AB7;}
+.expand-body-inner strong,.expand-body-inner b{font-weight:700;}
+.no-body{color:#aaa;font-style:italic;font-size:12px;}
+
+.act-card{border-radius:16px;margin-bottom:10px;overflow:hidden;}
+.act-header{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;cursor:pointer;user-select:none;transition:filter 0.15s;}
+.act-header:hover{filter:brightness(1.1);}
+.act-date-box{background:rgba(255,255,255,0.22);border-radius:12px;padding:6px 10px;text-align:center;min-width:50px;flex-shrink:0;}
+.act-day{font-size:22px;font-weight:700;color:#fff;line-height:1;}
+.act-month{font-size:10px;color:rgba(255,255,255,0.8);}
+.act-title-row{flex:1;}
+.act-title{font-size:14px;font-weight:700;color:#fff;margin-bottom:3px;}
+.act-ok{display:inline-flex;align-items:center;gap:4px;font-size:11px;background:rgba(255,255,255,0.25);border-radius:20px;padding:2px 8px;margin-top:5px;color:#fff;font-weight:600;}
+.act-emoji-big{font-size:28px;flex-shrink:0;line-height:1;padding-top:4px;}
+.act-chevron{font-size:14px;color:rgba(255,255,255,0.7);transition:transform 0.25s;flex-shrink:0;margin-top:4px;}
+.act-card.open .act-chevron{transform:rotate(180deg);}
+.act-body{display:none;padding:0 14px 12px 14px;}
+.act-card.open .act-body{display:block;}
+.act-body-inner{background:rgba(255,255,255,0.15);border-radius:10px;padding:10px 14px;font-size:13px;color:#fff;line-height:1.7;}
+
+.footer{text-align:center;font-size:12px;color:#888;margin-top:1.5rem;padding-bottom:1rem;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hero">
+    <div class="stars">⭐ 🌈 ⭐</div>
+    <div class="hero-title">שלום! הנה כל המידע שלך 🎒</div>
+    <div class="hero-sub">בית החינוך ע"ש יצחק שדה · כיתה א׳1 · היום {{ today_str }}</div>
+    <a href="/" class="refresh-btn">🔄 רענן נתונים</a>
+  </div>
+
+  <!-- ══ SMART SECTION ══ -->
+  <div class="sec-title">🧠 מה קורה עכשיו <span class="sec-sub">(AI חכם)</span></div>
+  {% if not upcoming and not homework %}
+  <div style="background:#fff3cd;border:1.5px solid #FAC775;border-radius:14px;padding:14px 18px;margin-bottom:1rem;font-size:13px;color:#633806;direction:rtl;">
+    ⚠️ <strong>פיצ׳ר ה-AI כבוי.</strong> כדי להפעיל, הוסף את המפתח שלך ב-<code>app.py</code>:<br>
+    <code>ANTHROPIC_API_KEY = "sk-ant-..."</code><br>
+    קבל מפתח בחינם ב: <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a>
+  </div>
+  {% else %}
+  <div class="smart-grid">
+
+    <!-- upcoming events -->
+    <div class="smart-panel">
+      <div class="smart-panel-header" style="background:#534AB7;">
+        🗓️ אירועים קרובים
+      </div>
+      <div class="smart-panel-body" style="border-color:#AFA9EC;">
+        {% if upcoming %}
+          {% for ev in upcoming %}
+          <div class="event-card">
+            <div class="event-emoji">{{ ev.emoji }}</div>
+            <div class="event-body">
+              {% if ev.urgency_label %}<span class="urgency-badge" style="background:{{ ev.color }};">{{ ev.urgency_label }}</span>{% endif %}
+              <div class="event-title">{{ ev.title }}</div>
+              <div class="event-date" style="color:{{ ev.color }};">📅 {{ ev.date_fmt }}</div>
+              {% if ev.to_bring %}
+              <div class="bring-list">
+                {% for item in ev.to_bring %}
+                <span class="bring-item">{{ item }}</span>
+                {% endfor %}
+              </div>
+              {% endif %}
+              {% if ev.notes %}<div class="event-note">💡 {{ ev.notes }}</div>{% endif %}
+            </div>
+          </div>
+          {% endfor %}
+        {% else %}
+          <div class="empty-smart">✨ אין אירועים קרובים</div>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- homework -->
+    <div class="smart-panel">
+      <div class="smart-panel-header" style="background:#0F6E56;">
+        📚 שיעורי בית ומטלות
+      </div>
+      <div class="smart-panel-body" style="border-color:#5DCAA5;">
+        {% if homework %}
+          {% for hw in homework %}
+          <div class="hw-card">
+            <div class="hw-emoji">{{ hw.emoji }}</div>
+            <div class="hw-body">
+              <span class="hw-subject" style="background:{{ hw.color }};">{{ hw.subject }}</span>
+              <div class="hw-task">{{ hw.task }}</div>
+              {% if hw.due_date %}<div class="hw-due" style="color:{{ hw.color }};">⏰ להגשה: {{ hw.due_date }}</div>{% endif %}
+              {% if hw.urgency_label %}<div style="font-size:11px;color:#888;margin-top:3px;">{{ hw.urgency_label }}</div>{% endif %}
+            </div>
+          </div>
+          {% endfor %}
+        {% else %}
+          <div class="empty-smart">✨ אין מטלות פתוחות</div>
+        {% endif %}
+      </div>
+    </div>
+
+  </div>
+  {% endif %}
+  <hr class="divider">
+
+  <!-- ══ TIMETABLE ══ -->
+  <div class="sec-title">📅 המערכת שלי השבוע</div>
+  <div class="day-grid">
+    {% for day in days %}
+    <div class="day-card {{ day.cls }}">
+      <div class="day-name">☀️ {{ day.name }}</div>
+      {% for l in day.lessons %}
+      <div class="lesson-pill {{ l.style }}">
+        <div class="lesson-num">{{ loop.index }}</div>
+        {{ l.subject }}
+      </div>
+      {% endfor %}
+    </div>
+    {% endfor %}
+  </div>
+
+  <hr class="divider">
+
+  <!-- ══ MESSAGES ══ -->
+  <div class="sec-title">💌 הודעות מהמורה <span class="sec-sub">(לחץ לפתיחה)</span></div>
+  {% for c in convs %}
+  <div class="expand-card" id="msg-{{ loop.index0 }}">
+    <div class="expand-header" style="background:{{ c.color }};" onclick="toggle('msg-{{ loop.index0 }}')">
+      <div class="msg-bubble">{{ c.emoji }}</div>
+      <div class="msg-header-text">
+        <div class="msg-subject">{% if c.is_new %}<span class="new-badge">חדש!</span>{% endif %}{{ c.subject }}</div>
+        <div class="msg-meta">{{ c.date }} · {{ c.sender }}</div>
+      </div>
+      <div class="chevron">▼</div>
+    </div>
+    <div class="expand-body" style="background:{{ c.color }};">
+      <div class="expand-body-inner">
+        {% if c.body %}{{ c.body | safe }}{% else %}<span class="no-body">אין תוכן זמין</span>{% endif %}
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+
+  <hr class="divider">
+
+  <!-- ══ ACTIVITIES ══ -->
+  <div class="sec-title">🗺️ פעילויות השנה <span class="sec-sub">(לחץ לפרטים)</span></div>
+  {% for a in acts %}
+  <div class="act-card" id="act-{{ loop.index0 }}">
+    <div class="act-header" style="background:{{ a.color }};" onclick="toggle('act-{{ loop.index0 }}')">
+      <div class="act-emoji-big">{{ a.emoji }}</div>
+      <div class="act-date-box"><div class="act-day">{{ a.day }}</div><div class="act-month">{{ a.month }}</div></div>
+      <div class="act-title-row">
+        <div class="act-title">{{ a.title }}</div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.75);">{{ a.date_fmt }}
+          {% if a.days_until >= 0 and a.days_until <= 7 %}
+            <span style="background:rgba(255,255,255,0.25);border-radius:8px;padding:1px 7px;margin-right:4px;font-weight:700;">
+              {% if a.days_until == 0 %}היום!{% elif a.days_until == 1 %}מחר{% else %}בעוד {{ a.days_until }} ימים{% endif %}
+            </span>
+          {% endif %}
+        </div>
+        {% if a.answered %}<span class="act-ok">✔ אושר</span>{% endif %}
+      </div>
+      <div class="act-chevron">▼</div>
+    </div>
+    <div class="act-body" style="background:{{ a.color }};">
+      <div class="act-body-inner">{{ a.description if a.description else "אין פרטים נוספים" }}</div>
+    </div>
+  </div>
+  {% endfor %}
+
+  <div class="footer">
+    נתונים נטענים ממשוב בכל פתיחה · {{ days|length }} ימים · {{ convs|length }} הודעות · {{ acts|length }} פעילויות
+    <br>
+    {% if cache_used %}
+      <span style="color:#27500A;font-weight:600;">✅ AI מ-cache (לא בוזבז קרדיט)</span>
+    {% else %}
+      <span style="color:#185FA5;font-weight:600;">🔄 AI עודכן עכשיו</span>
+    {% endif %}
+  </div>
+</div>
+
+<script>
+function toggle(id) {
+  document.getElementById(id).classList.toggle('open');
+}
+</script>
+</body>
+</html>
